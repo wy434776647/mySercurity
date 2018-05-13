@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -35,7 +36,7 @@ public class UesrControllerTest {
 	}
 
 	@Test
-	public void testCreateUser() throws Exception {
+	public void testCeateUser() throws Exception {
 		Date date = new Date();
 		String content = "{\"name\":\"jj\",\"password\":\"123456\",\"birthday\":"+date.getTime()+"}";
 		String result = mockMvc.perform(MockMvcRequestBuilders.post("/user")/*.param("name", "jj")*/
@@ -68,5 +69,24 @@ public class UesrControllerTest {
 				.andReturn().getResponse().getContentAsString();
 		System.out.println(result);
 	}
-	
+
+	@Test
+	public void updateUser() throws Exception {
+		String result = mockMvc.perform(MockMvcRequestBuilders.put("/user")
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content("{\"id\":1,\"name\":\"jj\"}"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
+				.andReturn().getResponse().getContentAsString();
+		System.out.println(result);
+	}
+
+	@Test
+	public void deleteUesrById() throws Exception {
+		String result = mockMvc.perform(MockMvcRequestBuilders.delete("/user/1")
+				.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andReturn().getResponse().getContentAsString();
+		System.out.println(result);
+	}
 }

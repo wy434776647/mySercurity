@@ -13,8 +13,20 @@ spring:
 
 server:
   port: 8060
-# security:
-#   basic:
-#     enabled: false
+#security:
+#  basic:
+#    enabled: false
 
-
+zmor:
+  security:
+    browser:
+      #loginPage:自定义登陆页面
+#      loginPage: /demo-signIn.html
+      #loginType:返回类型 REDIRECT：跳转到原请求Url  JSON:返回json信息
+      loginType: REDIRECT
+    code:
+      image:
+        width: 150
+        height: 25
+        length: 6
+        expireIn: 100
